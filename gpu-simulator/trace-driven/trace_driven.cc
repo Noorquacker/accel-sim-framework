@@ -645,6 +645,14 @@ void trace_shader_core_ctx::func_exec_inst(warp_inst_t &inst) {
   if (inst.is_load() || inst.is_store()) {
     inst.generate_mem_accesses();
   }
+// Begin MP2 Work
+this->m_gpu->num_coalesced_accesses += inst.m_num_coalesced_accesses;
+this->m_gpu->num_uncoalesced_accesses += inst.m_num_uncoalesced_accesses;
+this->m_gpu->num_coalesced_load += inst.m_num_coalesced_load;
+this->m_gpu->num_uncoalesced_load += inst.m_num_uncoalesced_load;
+this->m_gpu->num_coalesced_store += inst.m_num_coalesced_store;
+this->m_gpu->num_uncoalesced_store += inst.m_num_uncoalesced_store;
+// End MP2 Work
 
   trace_shd_warp_t *m_trace_warp =
       static_cast<trace_shd_warp_t *>(m_warp[inst.warp_id()]);
